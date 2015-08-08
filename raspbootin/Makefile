@@ -62,8 +62,11 @@ kernel.elf: $(OBJS) link-arm-eabi.ld
 kernel.img: kernel.elf
 	$(ARMGNU)-objcopy kernel.elf -O binary kernel.img
 
+kernel.devicetree.img: kernel.img attach-trailer
+	./attach-trailer < $< > $@
+
 clean:
-	$(RM) -f $(OBJS) kernel.elf kernel.img
+	$(RM) -f $(OBJS) kernel.elf kernel.img attach-trailer
 
 dist-clean: clean
 	find -name "*~" -delete
@@ -76,3 +79,7 @@ dist-clean: clean
 # AS.
 %.o: %.S Makefile
 	$(ARMGNU)-g++ $(ASFLAGS) -c $< -o $@
+
+# attach-trailer tool runs on *host*, so uses host CC
+attach-trailer: attach-trailer.c
+	$(CC) -o $@ $<
