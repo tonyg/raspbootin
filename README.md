@@ -61,3 +61,8 @@ Usage:
 - Copy the raspbootin/kernel.img to the SD Card for the Raspberry Pi.
 - Run raspbootcom/raspbootcom /dev/ttyUSB0 /where/you/have/your/kernel.img.
 - Turn on the Raspberry Pi.
+
+If you want to work with kernels that take devicetree instead of
+ATAGs, then in the `raspbootin` directory, run `make
+kernel.devicetree.img`. Copy the resulting `kernel.devicetree.img` to
+`kernel.img` on your SD card.
